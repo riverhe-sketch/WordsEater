@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Word Cache</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;600;700&family=Space+Grotesk:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="grain" aria-hidden="true"></div>
+    <header class="hero">
+      <div class="hero__text">
+        <p class="eyebrow">Daily Memory Studio</p>
+        <h1>Memorize every new word you meet at work.</h1>
+        <p class="subhead">
+          Capture, review, and track your vocabulary growth. Store everything
+          locally in this browser.
+        </p>
+        <div class="hero__stats" id="stats">
+          <div class="stat">
+            <span class="stat__label">Total Words</span>
+            <span class="stat__value" id="stat-total">0</span>
+          </div>
+          <div class="stat">
+            <span class="stat__label">Mastered</span>
+            <span class="stat__value" id="stat-mastered">0</span>
+          </div>
+          <div class="stat">
+            <span class="stat__label">This Week</span>
+            <span class="stat__value" id="stat-week">0</span>
+          </div>
+        </div>
+      </div>
+      <div class="hero__panel">
+        <form class="card" id="word-form">
+          <h2>Add a word</h2>
+          <label class="field">
+            <span>Word</span>
+            <input id="word-input" type="text" placeholder="e.g., throughput" required />
+          </label>
+          <label class="field">
+            <span>Meaning</span>
+            <textarea id="meaning-input" rows="3" placeholder="Short definition or note"></textarea>
+          </label>
+          <label class="field">
+            <span>Usage</span>
+            <input id="usage-input" type="text" placeholder="Where did you see it?" />
+          </label>
+          <label class="field">
+            <span>Tags</span>
+            <input id="tags-input" type="text" placeholder="design, infra, meeting" />
+          </label>
+          <div class="actions">
+            <button type="submit" class="btn btn--primary">Save Word</button>
+            <button type="button" class="btn btn--ghost" id="clear-form">Clear</button>
+          </div>
+        </form>
+        <div class="card card--compact">
+          <h3>Quick Review</h3>
+          <p id="review-word">Add a word to start your review flow.</p>
+          <div class="actions">
+            <button class="btn btn--ghost" id="shuffle-word" type="button">
+              Shuffle
+            </button>
+            <button class="btn btn--primary" id="mark-mastered" type="button">
+              Mark Mastered
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="content">
+      <section class="toolbar">
+        <div class="toolbar__left">
+          <h2>Your word list</h2>
+          <p class="muted">Filter, search, and keep what matters top of mind.</p>
+        </div>
+        <div class="toolbar__right">
+          <input
+            id="search-input"
+            class="search"
+            type="search"
+            placeholder="Search words or tags"
+          />
+          <select id="filter-select">
+            <option value="all">All</option>
+            <option value="active">Learning</option>
+            <option value="mastered">Mastered</option>
+          </select>
+          <button id="reset-data" class="btn btn--ghost" type="button">
+            Reset
+          </button>
+        </div>
+      </section>
+
+      <section class="grid" id="word-grid"></section>
+    </main>
+
+    <template id="word-card-template">
+      <article class="word-card">
+        <div class="word-card__header">
+          <div>
+            <h3 class="word-card__title"></h3>
+            <p class="word-card__meta"></p>
+          </div>
+          <button class="pill pill--status" type="button"></button>
+        </div>
+        <p class="word-card__meaning"></p>
+        <div class="tags"></div>
+        <div class="word-card__footer">
+          <span class="timestamp"></span>
+          <div class="actions">
+            <button class="btn btn--ghost btn--small" data-action="edit">Edit</button>
+            <button class="btn btn--ghost btn--small" data-action="delete">
+              Delete
+            </button>
+          </div>
+        </div>
+      </article>
+    </template>
+
+    <dialog id="edit-dialog">
+      <form method="dialog" class="card card--modal">
+        <h2>Edit word</h2>
+        <label class="field">
+          <span>Word</span>
+          <input id="edit-word" type="text" required />
+        </label>
+        <label class="field">
+          <span>Meaning</span>
+          <textarea id="edit-meaning" rows="3"></textarea>
+        </label>
+        <label class="field">
+          <span>Usage</span>
+          <input id="edit-usage" type="text" />
+        </label>
+        <label class="field">
+          <span>Tags</span>
+          <input id="edit-tags" type="text" />
+        </label>
+        <div class="actions">
+          <button class="btn btn--primary" value="save">Save</button>
+          <button class="btn btn--ghost" value="cancel">Cancel</button>
+        </div>
+      </form>
+    </dialog>
+
+    <script src="app.js"></script>
+  </body>
+</html>
